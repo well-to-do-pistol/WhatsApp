@@ -2,7 +2,7 @@ package com.example.easychat.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,7 @@ import com.example.easychat.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel,SearchUserRecyclerAdapter.UserModelViewHolder> {
+public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, SearchUserRecyclerAdapter.UserModelViewHolder> {
 
     Context context;
 
@@ -34,8 +34,16 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
         holder.usernameText.setText(model.getUsername());
         holder.phoneText.setText(model.getPhone());
         if(model.getUserId().equals(FirebaseUtil.currentUserId())){
-            holder.usernameText.setText(model.getUsername()+"(Me)");
+            holder.usernameText.setText(model.getUsername()+" (Me)");
         }
+
+//        FirebaseUtil.getOtherProfilePicStorageRef(model.getUserId()).getDownloadUrl()
+//                .addOnCompleteListener(t -> {
+//                    if(t.isSuccessful()){
+//                        Uri uri  = t.getResult();
+//                        AndroidUtil.setProfilePic(context,uri,holder.profilePic);
+//                    }
+//                });
 
         holder.itemView.setOnClickListener(v -> {
             //navigate to chat activity
@@ -57,7 +65,6 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
         TextView usernameText;
         TextView phoneText;
         ImageView profilePic;
-
 
         public UserModelViewHolder(@NonNull View itemView) {
             super(itemView);
