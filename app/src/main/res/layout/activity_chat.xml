@@ -75,7 +75,7 @@
             android:id="@+id/chat_message_input"
             />
 
-        <ImageView
+        <ImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/icon_send"
