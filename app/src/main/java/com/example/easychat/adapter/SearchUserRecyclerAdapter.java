@@ -37,13 +37,13 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
             holder.usernameText.setText(model.getUsername()+" (Me)");
         }
 
-//        FirebaseUtil.getOtherProfilePicStorageRef(model.getUserId()).getDownloadUrl()
-//                .addOnCompleteListener(t -> {
-//                    if(t.isSuccessful()){
-//                        Uri uri  = t.getResult();
-//                        AndroidUtil.setProfilePic(context,uri,holder.profilePic);
-//                    }
-//                });
+       FirebaseUtil.getOtherProfilePicStorageRef(model.getUserId()).getDownloadUrl() //用StorageReference的.getDownloadUrl()
+                                .addOnCompleteListener(t -> {
+                                    if (t.isSuccessful()){
+                                        Uri uri = t.getResult();
+                                        AndroidUtil.setProfilePic(context,uri,holder.profilePic); //用Glide把图像设置在View上
+                                    }
+                                });
 
         holder.itemView.setOnClickListener(v -> {
             //navigate to chat activity

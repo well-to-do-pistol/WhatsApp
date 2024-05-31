@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -60,6 +62,20 @@ public class FirebaseUtil {
 
     public static String timestampToString(Timestamp timestamp){
         return new SimpleDateFormat("HH:MM").format(timestamp.toDate());
+    }
+
+    public static void logout(){
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    public static StorageReference getCurrentProfilePicStorageRef(){
+        return FirebaseStorage.getInstance().getReference().child("profile_pic") //没有就创建一个child保存图像, child里再加个child保存当前Id(Id是图片名字?)
+                .child(FirebaseUtil.currentUserId()); //有就查找
+    }
+
+    public static StorageReference getOtherProfilePicStorageRef(String otherUserId){
+        return FirebaseStorage.getInstance().getReference().child("profile_pic") //没有就创建一个child保存图像, child里再加个child保存当前Id(Id是图片名字?)
+                .child(otherUserId); //有就查找
     }
 
 }

@@ -43,6 +43,15 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
 
 
                         UserModel otherUserModel = task.getResult().toObject(UserModel.class); //拿到对方user信息
+
+                        FirebaseUtil.getOtherProfilePicStorageRef(otherUserModel.getUserId()).getDownloadUrl() //用StorageReference的.getDownloadUrl()
+                                .addOnCompleteListener(t -> {
+                                    if (t.isSuccessful()){
+                                        Uri uri = t.getResult();
+                                        AndroidUtil.setProfilePic(context,uri,holder.profilePic); //用Glide把图像设置在View上
+                                    }
+                                });
+
                         holder.usernameText.setText(otherUserModel.getUsername());
                         if (lastMessageSentByMe)
                             holder.lastMessageText.setText("You : "+model.getLastMessage());
