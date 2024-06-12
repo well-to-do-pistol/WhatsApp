@@ -40,28 +40,28 @@ public class SplashActivity extends AppCompatActivity {
         });
         Log.d("Myfault","Myfault");
 
-//        if( FirebaseUtil.isLoggedIn() && getIntent().getExtras()!=null){
-//            Log.d("Myfault","Myfault1");
-//            //from notification
-//            String userId = getIntent().getExtras().getString("userId"); //从FCM拿到对方Id, 及时查看当前对话
-//            FirebaseUtil.allUserCollectionReference().document(userId).get()
-//                    .addOnCompleteListener(task -> {
-//                        if(task.isSuccessful()){
-//                            UserModel model = task.getResult().toObject(UserModel.class);
-//
-//                            Intent mainIntent = new Intent(this,MainActivity.class); //点进通知时加多一个主界面
-//                            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                            startActivity(mainIntent);
-//
-//                            Intent intent = new Intent(this, ChatActivity.class);
-//                            AndroidUtil.passUserModelAsIntent(intent,model);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    });
-//
-//        }else {
+        if( FirebaseUtil.isLoggedIn() && getIntent().getExtras()!=null){
+            Log.d("Myfault","Myfault1");
+            //from notification
+            String userId = getIntent().getExtras().getString("userId"); //从FCM拿到对方Id, 及时查看当前对话
+            FirebaseUtil.allUserCollectionReference().document(userId).get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            UserModel model = task.getResult().toObject(UserModel.class);
+
+                            Intent mainIntent = new Intent(this,MainActivity.class); //点进通知时加多一个主界面
+                            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(mainIntent);
+
+                            Intent intent = new Intent(this, ChatActivity.class);
+                            AndroidUtil.passUserModelAsIntent(intent,model);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+        }else {
             Log.d("Myfault","Myfault2");
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -74,6 +74,6 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             },1000);
-//        }
+        }
     }
 }
